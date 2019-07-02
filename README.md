@@ -17,7 +17,7 @@ LMError
 
 # Installation
 
-`npm install @leismore/LMError`
+`npm install @leismore/lmerror`
 
 # Syntax
 
@@ -42,7 +42,7 @@ Error object, message:
 # Example
 
 ```
-const LMError = require('@leismore/LMError');
+const LMError = require('@leismore/lmerror');
 
 throw new LMError('error message', '23', '415', previousError);
 ```

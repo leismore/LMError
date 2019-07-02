@@ -2,7 +2,7 @@
  * LMError is the general Error class for LMOS NodeJS projects.
  *
  * @param {string}       message             - Human-readable text
- * @param {string}       code                - Machine-readable code
+ * @param {string}       code                - Machine-readable code, digit
  * @param {string}       [httpCode = null]   - HTTP status code
  * @param {Error object} [previous = null]   - The previous Error object
  *
@@ -14,7 +14,7 @@
  *
  * LMError
  *   @attr {string}               message    - Human-readable text
- *   @attr {string}               code       - Machine-readable code
+ *   @attr {string}               code       - Machine-readable code, digit
  *   @attr {string       | null}  httpCode   - HTTP status code
  *   @attr {Error object | null}  previous   - The previous Error object
  */

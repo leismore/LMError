@@ -1,0 +1,16 @@
+{
+  "compilerOptions":
+  {
+    "baseUrl": "./src",
+    "declaration": true,
+    "lib": "ES2015",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "ES2015"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", ".git"]
+}

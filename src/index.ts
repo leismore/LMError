@@ -1,114 +1,108 @@
 /**
- * LMError is the general Error class for LMOS NodeJS projects.
- *
- * @param {string}       message             - Human-readable text
- * @param {string}       code                - Machine-readable code, digit
- * @param {string}       [httpCode = null]   - HTTP status code
- * @param {Error object} [previous = null]   - The previous Error object
+ * LMError - The general Error class for LMOS NodeJS projects.
  *
  * Error
- *   invalid message
- *   invalid code
- *   invalid httpCode
- *   invalid previous
- *
- * LMError
- *   @attr {string}               message    - Human-readable text
- *   @attr {string}               code       - Machine-readable code, digit
- *   @attr {string       | null}  httpCode   - HTTP status code
- *   @attr {Error object | null}  previous   - The previous Error object
+ *   invalid_error_message
+ *   invalid_error_code
+ *   invalid_http_statusCode
+ *   invalid_http_header
+ *   invalid_http_body
+ *   invalid_previous
  */
 
-'use strict';
+import {EOL} from 'os';
 
-const ptnMessage  = /^.+$/u;
-const ptnCode     = /^\d+$/;
-const ptnHttpCode = /^\d{3}$/;
-
-module.exports = class LMError extends Error {
-
-  constructor(message, code, httpCode=null, previous=null)
-  {
-    if (typeof message !== 'string' ||
-        ptnMessage.test(message) === false)
-    {
-      throw new Error('invalid message');
-    }
-
-    if ((typeof code !== 'string' && typeof code !== 'number') ||
-         ptnCode.test(code) === false)
-    {
-      throw new Error('invalid code');
-    }
-
-    if ( (typeof httpCode !== 'string' && typeof httpCode !== 'number' && httpCode !== null) ||
-         (httpCode !== null && ptnHttpCode.test(httpCode) === false) )
-    {
-      throw new Error('invalid httpCode');
-    }
-
-    if (previous !== null && previous instanceof Error === false)
-    {
-      throw new Error('invalid previous');
-    }
-
-    message = String(message);
-    code    = String(code);
-
-    if (httpCode !== null)
-    {
-      httpCode = String(httpCode);
-    }
-
-    super(message);
-
-    // V8
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, LMError);
-    }
-
-    Object.defineProperty(this, 'message', {
-      value:        this.message,
-      writable:     false,
-      enumerable:   false,
-      configurable: false
-    });
-
-    Object.defineProperty(this, 'code', {
-      value:        code,
-      writable:     false,
-      enumerable:   false,
-      configurable: false
-    });
-
-    Object.defineProperty(this, 'httpCode', {
-      value:        httpCode,
-      writable:     false,
-      enumerable:   false,
-      configurable: false
-    });
-
-    Object.defineProperty(this, 'previous', {
-      value:        previous,
-      writable:     false,
-      enumerable:   false,
-      configurable: false
-    });
-
-    Object.preventExtensions(this);
-  }
-
-  toString()
-  {
-    if (this.previous === null)
-    {
-      return (`${this.constructor.name}: ${this.message} / ${this.code} / ${this.httpCode}`);
-    }
-    else
-    {
-      return (`${this.constructor.name}: ${this.message} / ${this.code} / ${this.httpCode}` + '\n' +
-              this.previous);
-    }
-  }
-
+type Err = {
+  readonly message: string, // Message for human
+  readonly code:    string  // Code for machine
 };
+
+type Res = {                                            // HTTP response
+  readonly statusCode:  string,                         // HTTP response status code
+  readonly headers?:   {readonly [key:string]: string}  // HTTP headers
+  readonly body?:       any                             // HTTP body
+};
+
+const ptnMessage    = /^.+$/u;
+const ptnCode       = /^\w+$/;
+const ptnStatusCode = /^\d{3}$/;
+
+class LMError extends Error {
+
+  public readonly error:     Err;
+  public readonly response?: Res;
+  public readonly previous?: Error;
+
+  public readonly status?:     string;  // Mirror of this.response.statusCode
+  public readonly statusCode?: string;  // Mirror of this.response.statusCode
+
+  public constructor(error:Err, response?:Res, previous?:Error)
+  {
+    // Test error
+    if (ptnMessage.test(error.message)===false)
+    {
+      throw new Error('invalid_error_message');
+    }
+
+    if (ptnCode.test(error.code)===false)
+    {
+      throw new Error('invalid_error_code');
+    }
+
+    // Test response
+    if (response !== undefined)
+    {
+      if (ptnStatusCode.test(response.statusCode)===false)
+      {
+        throw new Error('invalid_http_statusCode');
+      }
+
+      if (response.headers !== undefined && response.headers !== {})
+      {
+        for (let k in response.headers)
+        {
+          if (k.length === 0 || response.headers[k].length === 0)
+          {
+            throw new Error('invalid_http_header');
+          }
+        }
+      }
+    }
+
+    // Test previous
+    if (previous!==undefined && previous instanceof Error === false)
+    {
+      throw new Error('invalid_previous');
+    }
+
+    // Init.
+    super(error.message);
+    this.error = error;
+    this.response = response;
+    this.previous = previous;
+
+    if (this.response !== undefined)
+    {
+      this.statusCode = this.response.statusCode;
+      this.status     = this.statusCode;
+    }
+  }
+
+  public toString()
+  {
+    let message = ( (new Date()).toISOString + ' - ' +
+      `${this.constructor.name}` + ': ' +
+      `${this.error.message} (${this.error.code})`
+    );
+
+    if (this.response !== undefined)
+    {
+      message = (message + EOL +
+        `HTTP `
+      );
+    }
+  }
+
+}
+
+export default LMError;

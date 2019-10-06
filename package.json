@@ -2,7 +2,7 @@
   "name": "@leismore/lmerror",
   "version": "2.0.0",
   "description": "The general Error class for LMOS NodeJS projects.",
-  "main":  "./dist/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/leismore/LMError/issues"
   },
-  "homepage": "https://github.com/leismore/LMError#readme"
+  "homepage": "https://github.com/leismore/LMError#readme",
+  "devDependencies": {
+    "@types/node": "^12.7.11"
+  }
 }

@@ -3,7 +3,7 @@
   {
     "baseUrl": "./src",
     "declaration": true,
-    "lib": "ES2015",
+    "lib": ["ES2015"],
     "module": "CommonJS",
     "moduleResolution": "Node",
     "outDir": "./dist",

@@ -58,7 +58,7 @@ type Res = {                                            // HTTP response
 # Example
 
 ```typescript
-const LMError = require('@leismore/lmerror');
+import LMError from '@leismore/lmerror';
 
 throw new LMError(
   {message: 'invalid data', code: '258985'},

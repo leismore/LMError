@@ -2,7 +2,9 @@
  * Rrr type for describing error info.
  */
 
-export type Err = {
+type Err = {
   readonly message: string, // Message for human
   readonly code:    string  // Code for machine
 };
+
+export default Err;

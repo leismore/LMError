@@ -1,50 +1,74 @@
 # LMError
 
-The general Error class for LMOS NodeJS projects.
+A general Error class for Node.js projects.
+
+* Error message & code supported
+* HTTP response information integrated
+* Previous error supported
+
+# Donation
+
+Buy me a coffee via [PayPal.me](https://paypal.me/kaiqin/5AUD)
 
 # Motivation
 
-Define a extendable Error class for describing Error Code, HTTP Status Code and Previous Error.
+Define an extendable Error class for describing error information, HTTP response information and previous error.
 
-## Class Structure
+# Class Structure
 
-LMError
+**Properties**
 
-*   @attr {string}               message    - Human-readable text
-*   @attr {string}               code       - Machine-readable code, digit
-*   @attr {string       | null}  httpCode   - HTTP status code
-*   @attr {Error object | null}  previous   - The previous Error object
+```typescript
+public readonly error:       Err;
+public readonly response?:   Res;
+public readonly previous?:   Error;
+
+public readonly status?:     string;  // Mirror of this.response.statusCode
+public readonly statusCode?: string;  // Mirror of this.response.statusCode
+```
+
+**Methods**
+
+```typescript
+public constructor(error: Err, response?: Res, previous?: Error)
+public toString(): string
+```
+
+**Types**
+
+```typescript
+type Err = {                // Error
+  readonly message: string, // Message for human
+  readonly code:    string  // Code for machine
+};
+```
+
+```typescript
+type Res = {                                            // HTTP response
+  readonly statusCode:  string,                         // HTTP response status code
+           headers?:   {readonly [key:string]: string}, // HTTP headers
+           body?:       any                             // HTTP body
+};
+```
 
 # Installation
 
 `npm install @leismore/lmerror`
 
-# Syntax
-
-`new LMError( message, code, [ httpCode=null, [previous=null] ] );`
-
-## Parameters
-
-* @param {string}       message             - Human-readable text
-* @param {string}       code                - Machine-readable code, digit
-* @param {string}       [httpCode = null]   - HTTP status code
-* @param {Error object} [previous = null]   - The previous Error object
-
-## Error
-
-Error object, message:
-
-*   invalid message
-*   invalid code
-*   invalid httpCode
-*   invalid previous
-
 # Example
 
-```
+```typescript
 const LMError = require('@leismore/lmerror');
 
-throw new LMError('error message', '23', '415', previousError);
+throw new LMError(
+  {message: 'invalid data', code: '258985'},
+  {
+    statusCode: '500',
+    headers:    {'Content-Type': 'application/json'},
+    body:       {reason: 'invalid data'}
+  },
+  previousError
+);
 ```
 
 # Authors
@@ -55,22 +79,6 @@ throw new LMError('error message', '23', '415', previousError);
 
 MIT License
 
-Copyright (c) 2019 leismore
+# Credit
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Inspired greatly by [http-errors](https://www.npmjs.com/package/http-errors)

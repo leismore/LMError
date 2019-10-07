@@ -2,21 +2,42 @@
 
 A general Error class for Node.js projects.
 
-* Error message & code supported
-* HTTP response information integrated
-* Previous error supported
+* Error message & error code
+* HTTP response
+* Error chain
 
 # Donation
 
 Buy me a coffee via [PayPal.me](https://paypal.me/kaiqin/5AUD)
 
-# Motivation
+# Installation
 
-Define an extendable Error class for describing error information, HTTP response information and previous error.
+`npm install @leismore/lmerror`
+
+# Example
+
+```typescript
+import {LMError} from '@leismore/lmerror';
+// Or
+const LMError    = require('@leismore/lmerror').LMError;
+
+let errMessage   = {message: 'some error', code: 'error_001'};
+let httpResponse = {
+  statusCode: '503',
+  headers:    {
+    'Retry-After': '10',
+    'Content-Type': 'application/json'
+  },
+  body:       {message: 'Please try again later'}
+};
+let previousError = new Error('previous error');
+
+throw new LMError(errMessage, httpResponse, previousError);
+```
 
 # Class Structure
 
-**Properties**
+## Properties
 
 ```typescript
 public readonly error:       Err;
@@ -27,14 +48,25 @@ public readonly status?:     string;  // Mirror of this.response.statusCode
 public readonly statusCode?: string;  // Mirror of this.response.statusCode
 ```
 
-**Methods**
+## Methods
 
 ```typescript
 public constructor(error: Err, response?: Res, previous?: Error)
 public toString(): string
 ```
 
-**Types**
+### `Error` thrown by `constructor`
+
+Error messages:
+
+* invalid_error_message
+* invalid_error_code
+* invalid_http_statusCode
+* invalid_http_header
+* invalid_http_body
+* invalid_previous
+
+## Types
 
 ```typescript
 type Err = {                // Error
@@ -49,26 +81,6 @@ type Res = {                                            // HTTP response
            headers?:   {readonly [key:string]: string}, // HTTP headers
            body?:       any                             // HTTP body
 };
-```
-
-# Installation
-
-`npm install @leismore/lmerror`
-
-# Example
-
-```typescript
-import LMError from '@leismore/lmerror';
-
-throw new LMError(
-  {message: 'invalid data', code: '258985'},
-  {
-    statusCode: '500',
-    headers:    {'Content-Type': 'application/json'},
-    body:       {reason: 'invalid data'}
-  },
-  previousError
-);
 ```
 
 # Authors

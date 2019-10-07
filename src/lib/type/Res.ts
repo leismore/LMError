@@ -8,4 +8,4 @@ type Res = {                                            // HTTP response
            body?:       any                             // HTTP body
 };
 
-export default Res;
+export {Res};

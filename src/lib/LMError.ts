@@ -12,8 +12,8 @@
 
 import {EOL} from 'os';
 import {ptnMessage, ptnCode, ptnStatusCode} from './patterns';
-import Err from './type/Err';
-import Res from './type/Res';
+import {Err} from './type/Err';
+import {Res} from './type/Res';
 
 class LMError extends Error
 {
@@ -149,4 +149,4 @@ class LMError extends Error
   }
 }
 
-export default LMError;
+export {LMError};

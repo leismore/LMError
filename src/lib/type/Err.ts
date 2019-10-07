@@ -7,4 +7,4 @@ type Err = {
   readonly code:    string  // Code for machine
 };
 
-export default Err;
+export {Err};

@@ -43,9 +43,6 @@ throw new LMError(errMessage, httpResponse, previousError);
 public readonly error:       Err;
 public readonly response?:   Res;
 public readonly previous?:   Error;
-
-public readonly status?:     string;  // Mirror of this.response.statusCode
-public readonly statusCode?: string;  // Mirror of this.response.statusCode
 ```
 
 ## Methods

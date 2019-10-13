@@ -21,9 +21,6 @@ class LMError extends Error
   public readonly response?:   Res;
   public readonly previous?:   Error;
 
-  public readonly status?:     string;  // Mirror of this.response.statusCode
-  public readonly statusCode?: string;  // Mirror of this.response.statusCode
-
   public constructor(error: Err, response?: Res, previous?: Error)
   {
     super(error.message);
@@ -33,8 +30,6 @@ class LMError extends Error
       if (response!==undefined)
       {
         this.response   = this.filterResponse(response);
-        this.statusCode = this.response.statusCode;
-        this.status     = this.response.statusCode;
       }
       this.previous = previous;
     }

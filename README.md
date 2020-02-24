@@ -49,10 +49,11 @@ public readonly previous?:   Error;
 
 ```typescript
 public constructor(error: Err, response?: Res, previous?: Error)
+public addPrevious(previous: Error):void
 public toString(): string
 ```
 
-### `Error` thrown by `constructor`
+### `Error` thrown by `constructor` and `addPrevious`
 
 Error messages:
 
@@ -62,6 +63,7 @@ Error messages:
 * invalid_http_header
 * invalid_http_body
 * invalid_previous
+* previous_exists
 
 ## Types
 

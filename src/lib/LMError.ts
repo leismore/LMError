@@ -8,6 +8,7 @@
  *   invalid_http_header
  *   invalid_http_body
  *   invalid_previous
+ *   previous_exists
  */
 
 import {EOL} from 'os';
@@ -19,7 +20,7 @@ class LMError extends Error
 {
   public readonly error:       Err;
   public readonly response?:   Res;
-  public readonly previous?:   Error;
+  public          previous?:   Error;
 
   public constructor(error: Err, response?: Res, previous?: Error)
   {
@@ -36,6 +37,18 @@ class LMError extends Error
     catch (e)
     {
       throw e;
+    }
+  }
+
+  public addPrevious(previous: Error):void
+  {
+    if (this.previous === undefined)
+    {
+      this.previous = previous;
+    }
+    else
+    {
+      throw new Error('previous_exists');
     }
   }
 

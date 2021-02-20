@@ -14,15 +14,17 @@ Buy me a coffee via [![PayPal Donation](https://www.paypalobjects.com/en_AU/i/bt
 
 `npm install @leismore/lmerror`
 
+# Test
+
+`npm test`
+
 # Example
 
 ```typescript
-import {LMError} from '@leismore/lmerror';
-// Or
-const LMError    = require('@leismore/lmerror').LMError;
+import { LMError, Err, Res } from '@leismore/lmerror';
 
-let errMessage   = {message: 'some error', code: 'error_001'};
-let httpResponse = {
+let errMessage:Err = { message: 'some error', code: 'error_001' };
+let httpResponse:Res = {
   statusCode: '503',
   headers:    {
     'Retry-After': '10',
@@ -42,7 +44,7 @@ throw new LMError(errMessage, httpResponse, previousError);
 ```typescript
 public readonly error:       Err;
 public readonly response?:   Res;
-public readonly previous?:   Error;
+public          previous?:   Error;
 ```
 
 ## Methods

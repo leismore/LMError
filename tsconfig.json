@@ -3,8 +3,8 @@
   {
     "lib":              ["ES2015"],
     "target":            "ES2015",
-    "baseUrl":           "./src",
-    "outDir":            "./dist",
+    "baseUrl":           "./src/",
+    "outDir":            "./dist/",
     "module":            "CommonJS",
     "moduleResolution":  "Node",
     "resolveJsonModule":  true,
@@ -13,6 +13,6 @@
     "allowJs":            false,
     "checkJs":            false,
   },
-  "include":            ["src"],
-  "exclude":            ["node_modules", "dist", ".git"]
+  "include":            ["./src/"],
+  "exclude":            ["./node_modules/", "./dist/", "./.git/", "./test/"]
 }

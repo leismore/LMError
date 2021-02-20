@@ -1,6 +1,6 @@
 {
   "name": "@leismore/lmerror",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "The general Error class for LMOS NodeJS projects.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

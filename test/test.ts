@@ -66,6 +66,12 @@ describe('LMError class: Adding a previous error', function(){
         let e = new LMError(err_valid, res_valid);
         e.addPrevious(lmerror);
     });
+    it('With a duplicate error', function(){
+        assert.throws(function(){
+            let e = new LMError(err_valid, res_valid, lmerror);
+            e.addPrevious(error);
+        }, Error, 'previous_exists');
+    });
 });
 
 describe('LMError class: toString', function(){

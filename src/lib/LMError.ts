@@ -32,7 +32,10 @@ class LMError extends Error
       {
         this.response   = this.filterResponse(response);
       }
-      this.previous = previous;
+      if (previous !== undefined)
+      {
+        this.previous = this.filterPrevious(previous);
+      }
     }
     catch (e)
     {
@@ -40,11 +43,24 @@ class LMError extends Error
     }
   }
 
+  /**
+   * 
+   * @throws Error
+   *   invalid_previous
+   *   previous_exists
+   */
   public addPrevious(previous: Error):void
   {
     if (this.previous === undefined)
     {
-      this.previous = previous;
+      try
+      {
+        this.previous = this.filterPrevious(previous);
+      }
+      catch(e)
+      {
+        throw e;
+      }
     }
     else
     {
@@ -154,6 +170,18 @@ class LMError extends Error
     }
 
     return response;
+  }
+
+  private filterPrevious(previous: Error): Error
+  {
+    if (previous instanceof Error)
+    {
+      return previous;
+    }
+    else
+    {
+      throw new Error('invalid_previous');
+    }
   }
 }
 

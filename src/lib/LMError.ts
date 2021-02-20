@@ -185,4 +185,4 @@ class LMError extends Error
   }
 }
 
-export {LMError};
+export {LMError, Err, Res};

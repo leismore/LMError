@@ -2,5 +2,5 @@
  * LMError - The general Error class for LMOS NodeJS projects.
  */
 
-import {LMError} from './lib/LMError';
-export {LMError};
+import {LMError, Err, Res} from './lib/LMError';
+export {LMError, Err, Res};

@@ -1,6 +1,6 @@
 {
   "name": "@leismore/lmerror",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "The general Error class for LMOS NodeJS projects.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,7 +19,7 @@
     "TypeScript"
   ],
   "author": "Kyle Chine",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/leismore/LMError/issues"
   },

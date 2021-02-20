@@ -88,7 +88,7 @@ type Res = {                                            // HTTP response
 
 # License
 
-MIT License
+GNU Affero General Public License v3.0
 
 # Credit
 

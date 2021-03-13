@@ -21,10 +21,10 @@ Buy me a coffee via [![PayPal Donation](https://www.paypalobjects.com/en_AU/i/bt
 # Example
 
 ```typescript
-import { LMError, Err, Res } from '@leismore/lmerror';
+import { LMError, LMErrorErr, LMErrorRes } from '@leismore/lmerror';
 
-let errMessage:Err = { message: 'some error', code: 'error_001' };
-let httpResponse:Res = {
+let errMessage:LMErrorErr = { message: 'some error', code: 'error_001' };
+let httpResponse:LMErrorRes = {
   statusCode: '503',
   headers:    {
     'Retry-After': '10',
@@ -42,15 +42,15 @@ throw new LMError(errMessage, httpResponse, previousError);
 ## Properties
 
 ```typescript
-public readonly error:       Err;
-public readonly response?:   Res;
+public readonly error:       LMErrorErr;
+public readonly response?:   LMErrorRes;
 public          previous?:   Error;
 ```
 
 ## Methods
 
 ```typescript
-public constructor(error: Err, response?: Res, previous?: Error)
+public constructor(error: LMErrorErr, response?: LMErrorRes, previous?: Error)
 public addPrevious(previous: Error):void
 public toString(): string
 ```
@@ -70,14 +70,14 @@ Error messages:
 ## Types
 
 ```typescript
-type Err = {                // Error
+type LMErrorErr = {         // Error
   readonly message: string, // Message for human
   readonly code:    string  // Code for machine
 };
 ```
 
 ```typescript
-type Res = {                                            // HTTP response
+type LMErrorRes = {                                     // HTTP response
   readonly statusCode:  string,                         // HTTP response status code
            headers?:   {readonly [key:string]: string}, // HTTP headers
            body?:       any                             // HTTP body

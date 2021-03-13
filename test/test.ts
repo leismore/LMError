@@ -1,5 +1,5 @@
 import { assert }            from 'chai';
-import { LMError, Err, Res } from '../src/index';
+import { LMError, LMErrorErr as Err, LMErrorRes as Res } from '../src/index';
 
 const err_valid:Err = {
     message: 'an error message',

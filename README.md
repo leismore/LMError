@@ -1,3 +1,7 @@
+**This package is obsoleted. Please replace it with [@leismore/lmos-nodejs-lmerror](https://www.npmjs.com/package/@leismore/lmos-nodejs-lmerror)**
+
+---
+
 # LMError
 
 A general Error class for Node.js projects.
